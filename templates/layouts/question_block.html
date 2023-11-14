@@ -11,7 +11,7 @@
           <div class="question-rating">
             <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
               <button type="button" class="btn btn-outline-secondary"><img src="{% static "svg/like.svg" %}" alt="down-vote"/></button>
-              <button type="button" class="btn btn-outline-secondary disabled">{{ question.get_rating }}</button>
+              <button type="button" class="btn btn-outline-secondary disabled">{{ question.votes }}</button>
               <button type="button" class="btn btn-outline-secondary"><img src="{% static "svg/dislike.svg" %}" alt="down-vote"/></button>
             </div>
           </div>
@@ -20,7 +20,7 @@
 
       <div class="col-8 question-text">
         <div class="question-title">
-          <h2><a href="" class="link link-opacity-75-hover">{{ question.title }}</a></h2>
+          <h2><a href="{% url 'question' %}" class="link link-opacity-75-hover">{{ question.title }}</a></h2>
         </div>
         <div class="question-description">
           <p class="text-muted question-description">
@@ -31,7 +31,7 @@
           <div class="row align-items-baseline">
             <div class="col-3">
               <p class="text-muted">
-                <a id="question-1-answers-link" href="">Answer ({{ question.answer_set.count }})</a>
+                <a id="question-1-answers-link" href="{% url 'question' %}">Answer ({{ question.votes }})</a>
               </p>
             </div>
             <div class="col-9">
@@ -41,9 +41,9 @@
                 </div>
                 <div class="col-10">
                   <ul class="list-group list-group-horizontal">
-                    {% for tag in question.tags.all %}
+                    {% for tags in global_tags %}
                       <li class="list-group-item">
-                        <a href="{% url "by_tag" tag.title %}" class="text-muted">{{ tag.title }}</a>
+                        <a href="{% url 'uniq_tag' %}" class="text-muted">{{ tags.title }}</a>
                       </li>
                     {% endfor %}
                   </ul>
