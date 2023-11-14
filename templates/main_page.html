@@ -1,0 +1,26 @@
+{% extends "layouts/base.html" %}
+% load static %}
+
+{% block content-header %}
+  <ul class="list-group list-group-horizontal mt-5 align-items-baseline mb-4">
+      <li class="list-group-item border-0 px-0">
+        <h1>All questions</h1>
+      </li>
+      <li class="list-group-item border-0 px-4">
+        <h2><a href="">Hot questions</a></h2>
+      </li>
+    </ul>
+{% endblock %}
+
+
+{% block left-column %}
+  {% for question in page_obj %}
+    {% block question %}
+      {% include 'layouts/question_block.html' with question=question %}
+    {% endblock %}
+  {% endfor %}
+
+  {% block paginator %}
+      {% include 'layouts/paginator.html' with page_obj=page_obj %}
+  {% endblock %}
+{% endblock %}
