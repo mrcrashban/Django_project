@@ -17,9 +17,11 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         ratio = kwargs['ratio']
 
-        # 10+ часов кайфа при ratio=10_000
-
-        _fill_answers(ratio)
+        _fill_users(ratio)
+        _fill_tags(ratio)
+        _fill_questions(10*ratio)
+        _fill_answers(100*ratio)
+        _fill_votes(500*ratio)
 
 
 def _fill_users(ratio):
