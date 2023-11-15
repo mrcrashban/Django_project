@@ -33,7 +33,7 @@ main > .container {
     text-overflow: ellipsis " [...]";
 }
 
-.question-links ul li:nth-child(n+5) {
+.question-links ul li:nth-child(n+4) {
     display: none;
 }
 
@@ -41,7 +41,7 @@ main > .container {
     white-space: nowrap;
 }
 
-.question-links ul li:nth-child(4) {
+.question-links ul li:nth-child(3) {
     border-radius: 0.0rem 0.5rem 0.5rem 0.0rem;
 }
 
