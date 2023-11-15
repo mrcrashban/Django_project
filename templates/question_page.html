@@ -50,7 +50,7 @@
                   <ul class="list-group list-group-horizontal">
                     {% for tag in question.tags.all %}
                       <li class="list-group-item">
-                        <a href="{% url "by_tag" tag.title %}" class="text-muted">{{ tag.title }}</a>
+                        <a href="{% url "uniq_tag" tag.title %}" class="text-muted">{{ tag.title }}</a>
                       </li>
                     {% endfor %}
                   </ul>

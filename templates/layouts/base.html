@@ -44,7 +44,7 @@
                     <a class="nav-link" href="{% url 'signup' %}" style="color: white">Sign up</a>
                 </li>
             </ul> -->
-                <div class="d-flex align-items-center" style="line-height: 1;">
+            <div class="d-flex align-items-center" style="line-height: 1;">
                 <div class="mr-2">
                     <div class="text-center">
                         <p class="text-white h4 mb-0">mrcrashban</p>
@@ -86,7 +86,7 @@
                         <p>
                             {% for tag in global_tags %}
                                 {% block tag_link %}
-                                    <a href="{% url 'uniq_tag' %}"
+                                    <a href="{% url 'uniq_tag' tag.title %}"
                                        class="fs-4 link-secondary">{{ tag.title }}</a>
                                 {% endblock %}
                             {% endfor %}

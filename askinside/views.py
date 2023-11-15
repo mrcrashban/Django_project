@@ -1,41 +1,28 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.http import HttpResponse
+
+from askinside.models import Tag, Question, Answer
 from templates import layouts
-
-questions = [
-    {
-        'title': f'Question {i}',
-        'body': f'Long lorem ipsum {i}',
-        'votes': i,
-        'created_at': i,
-        'tags': f'Python',
-        'author': f'Anton {i}'
-    } for i in range(30)
-]
-
-tags = [
-    {
-        'title': f'Python',
-        'created_at': j
-    } for j in range(3)
-]
 
 
 # Create your views here.
 def main_page(request):
-    page_obj = paginate(questions, request)
+    page_obj = paginate(Question.objects.sorted_by_created_at(), request)
+
     context = {'page_obj': page_obj,
-               'global_tags': tags,
+               'global_tags': Tag.objects.sort_by_related_question_quantity()[:10],
                }
+
     return render(request, 'main_page.html', context)
 
 
 def hot(request):
-    page_obj = paginate(questions, request)
+    page_obj = paginate(Question.objects.sorted_by_rating(), request)
     context = {'page_obj': page_obj,
-               'global_tags': tags,
+               'global_tags': Tag.objects.sort_by_related_question_quantity()[:10],
                }
+
     return render(request, 'hot.html', context)
 
 
@@ -48,18 +35,34 @@ def signup(request):
 
 
 def new_question(request):
-    return render(request, 'ask.html')
+    context = {'global_tags': Tag.objects.sort_by_related_question_quantity()[:10]}
+
+    return render(request, 'ask.html', context)
 
 
 def settings(request):
     return render(request, 'settings.html')
 
 
-def question_page(request):
-    return render(request, 'question_page.html')
+def question_page(request, question_id):
+    page_obj = paginate(Answer.objects.filter(question_id=question_id), request, 3)
 
-def tag(request):
-    return render(request, 'show_tag.html')
+    context = {'question': Question.objects.get(pk=question_id),
+               'global_tags': Tag.objects.sort_by_related_question_quantity()[:10],
+               'page_obj': page_obj,
+               }
+    return render(request, 'question_page.html', context)
+
+
+def tag(request, title):
+    page_obj = paginate(Question.objects.filter_by_tag(title), request)
+
+    context = {'tag': Tag.objects.get(title=title),
+               'page_obj': page_obj,
+               'global_tags': Tag.objects.sort_by_related_question_quantity()[:10]
+               }
+    return render(request, 'show_tag.html', context)
+
 
 def paginate(objects_list, request, per_page=10):
     paginator = Paginator(objects_list, per_page)
